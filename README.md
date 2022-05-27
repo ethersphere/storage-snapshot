@@ -26,7 +26,8 @@ It will execute `helmsman-dsf/init.yaml` Helmsman DSF file.
 Helmsman DSF files use official [Bee Helm Chart](https://github.com/ethersphere/helm/tree/master/charts/bee) and custom [Ethereum Geth Chart](https://github.com/ethersphere/helm/tree/master/charts/geth-swap), and both are deployed in the same Kubernetes namespace.
 
 **Note:** Everyone should update name of the namespace to avoid overlapping with others if working on the same Kubernetes cluster. 
-**Note:** Specify your AWS account ID inside `.env` file using `export AWS_ACCOUNT_ID=`
+
+:red_circle: Specify your AWS account ID inside `.env` file using `export AWS_ACCOUNT_ID=`
 
 ### Export
 For exporting all cluster data Bee and Geth nodes:
