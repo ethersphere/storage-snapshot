@@ -1,0 +1,88 @@
+image:
+  pullPolicy: Always
+
+podManagementPolicy: Parallel
+
+serviceAccount:
+  create: true
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx-internal
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+    nginx.ingress.kubernetes.io/session-cookie-name: "SWARMGATEWAY"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "86400" # 30 minutes
+    nginx.ingress.kubernetes.io/session-cookie-path: "default"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "7200"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "7200"
+  hosts:
+    - paths:
+        - /
+
+ingressDebug:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx-internal
+  hosts:
+    - paths:
+        - /
+
+persistence:
+  enabled: true
+  size: 20Gi
+  storageClass: gp2
+
+resources:
+  limits:
+    memory: 1Gi
+    cpu: 0.5
+  requests:
+    memory: 1Gi
+    cpu: 0.25
+
+imagePullSecrets:
+  - name: regcred
+
+nodeSelector:
+  node-group: private
+
+beeConfig:
+  allow-private-cidrs: true
+  block-time: 1
+  debug-api-enable: true
+  mainnet: false
+  network-id: 12345
+  payment-threshold: 108000000
+  postage-stamp-address: 0x538e6de1d876bbcd5667085257bc92f7c808a0f3
+  price-oracle-address: 0xfc28330f1ece0ef2371b724e0d19c1ee60b728b2
+  tracing-enable: true
+  tracing-service-name: bee-storage-insentives
+  tracing-endpoint: tempo-tempo-distributed-distributor.observability:6831
+  swap-endpoint: http://geth-geth-swap:8545
+  swap-factory-address: 0x09ad42a7d020244920309ffa14ea376dd2d3b7d5
+  swap-legacy-factory-addresses: 0x657241f4494a2f15ba75346e691d753a978c72df
+  swap-initial-deposit: 500000000000000000
+  verbosity: 5
+
+password: beekeeper
+
+libp2pSettings:
+  enabled: true
+  libp2pKeys:
+    bootnode-bee-0: '{"address":"aa6675fb77f3f84304a00d5ea09902d8a500364091a457cf21e05a41875d48f7","crypto":{"cipher":"aes-128-ctr","ciphertext":"93effebd3f015f496367e14218cb26d22de8f899e1d7b7686deb6ab43c876ea5","cipherparams":{"iv":"627434462c2f960d37338022d27fc92e"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"a59e72e725fe3de25dd9c55aa55a93ed0e9090b408065a7204e2f505653acb70"},"mac":"dfb1e7ad93252928a7ff21ea5b65e8a4b9bda2c2e09cb6a8ac337da7a3568b8c"},"version":3}'
+
+swarmSettings:
+  enabled: true
+  swarmKeys:
+    bootnode-bee-0: '{"address":"7338babe3975595e39b90ffbb097f70a2070a665","crypto":{"cipher":"aes-128-ctr","ciphertext":"1fc935dac27aa66ef27a1881c578ef4afa81d761e3c6babe519da92cde8b7813","cipherparams":{"iv":"f4c348ae224b25a112e9a7c2927c27b5"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"d007a31a0fc410714c896ea278a014ff1d9a2ae58679ac3ecd0297e32320773b"},"mac":"8eadcc06883b79d9668c5bd448a7014bcbe7f09cfe5c8634d7062f0466284cd0"},"version":3}'
+    full-bee-0: '{"address":"5afaed16435fe67d4fcbfcf9b0bcd3463333a356","crypto":{"cipher":"aes-128-ctr","ciphertext":"6bcb28416aa5cc8b59dcc9e16ebc372222690ea3ca4d158ae0d77128ca1eb462","cipherparams":{"iv":"05a317a1cf591045bb61c78d3cc97321"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"bac1e6b3a19b48e52125c0a4de38faede04625d00396663f4e5e164b78dfcaa4"},"mac":"b4022b2c9a7f5b7457e4aa4705b3b65d4f127a1453ede01b5a8a7cf4ed70ceec"},"version":3}'
+    full-bee-1: '{"address":"ccee7cba14f46a7ec390c7426a074a0d278764f1","crypto":{"cipher":"aes-128-ctr","ciphertext":"f2e84fc36b8938b328504c4dc8e7e1a6b811cc56abf2c7d338f88ab06edffa27","cipherparams":{"iv":"8a47da2faef04beab5664b87d91b560a"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"ba542d9ddc29ab2e4fe68e7ef200d11d00608ac43494b18a964ce8423a3ad7e0"},"mac":"4692be67567434f90ca08dc036aebeebc2168b1aa4fab3a268d701d02f195470"},"version":3}'
+    full-bee-2: '{"address":"4348646e8da90390ca9c96f32f650bd386e1e258","crypto":{"cipher":"aes-128-ctr","ciphertext":"de2b9ed0927723da96dcbbf365b861af705ead1aef1cec05a088b07f847847b1","cipherparams":{"iv":"f89bdbb4a0026ea9261eeb71f58e3a18"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"b1b1de6bf7558c20052f69bd7f08486b99f2824bac781bfeda21bde73b31ddc2"},"mac":"919634ea39c0380b7728a6e1ef58bbf44cc70c9addb3c23fa6e80ede280dd88b"},"version":3}'
+    full-bee-3: '{"address":"c1db47b22c50477541b9df51bcd70ff7443a4a27","crypto":{"cipher":"aes-128-ctr","ciphertext":"d08314d07ba5f49495b26f69b0bc387a62f3d0c0515074ac9691ee3b0b0b4cb8","cipherparams":{"iv":"df2c1d9506a7bcd008c8a6c759642861"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"fe82dd71cff7d405dd843f515b10b840bf16a71653c23a2870a9f01a48e66777"},"mac":"1f378dc5e5a926a145c1639f2f4b3c1acace3c9f5a333c4d48fbb038f5e4e998"},"version":3}'
+    full-bee-4: '{"address":"4c2c21a7d896f22c7563376b5dfd10ccf8058342","crypto":{"cipher":"aes-128-ctr","ciphertext":"5989d0fb2c050f99968c5aac2cde4a1e014f5ae6a4755aed3c74836760310f76","cipherparams":{"iv":"17f40362fd4fe7e1ff3de9f017b3013c"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"252541ea0112eec293adaecae813738da1659a07aa86e4fea7917aedf25766af"},"mac":"dc41d8434822b6eec148a42b80236d56cde42e0b1a3a1087fdb5b555e9bded7d"},"version":3}'
+    light-bee-0: '{"address":"3aebbc9b35035520f5d6ef35df5f5013f5d30beb","crypto":{"cipher":"aes-128-ctr","ciphertext":"153bbf37d7909e41ea57514e4a1632780dc35397f0b95debff9b75132985159f","cipherparams":{"iv":"0fcef08c8c91d6ecc34739d0e7288bae"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"33c0773e02d5f24f2e4fe94fac69230ddd1ff1ffdaf6a5ab11844a8cfb926ea4"},"mac":"f2a606df081eaf4859ce177ebcb3edda7b4a218f792768c811557c07a2f0b2fe"},"version":3}'
+    light-bee-1: '{"address":"eea7008b30d77adfa44b3e1ff6a58baeace84861","crypto":{"cipher":"aes-128-ctr","ciphertext":"af573483014e4a3866b6373d081fd01478095fc2b796dd259e06f70581abfb1d","cipherparams":{"iv":"53c3cc37f18f1b7b237d5040cd6997d7"},"kdf":"scrypt","kdfparams":{"n":32768,"r":8,"p":1,"dklen":32,"salt":"a5a0c8f1046da6a6f1ee012c997f2279e2db87772d32c6fb750be63da8b1563e"},"mac":"aa5afb8f6c7d5115dc13688608b477a7feee2596214bcfa28317ddcdbb7e354d"},"version":3}'
