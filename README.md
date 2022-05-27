@@ -42,7 +42,7 @@ $ NAMESPACE=storage-snapshot ./run.sh export latest
 For importing all cluster data Bee and Geth nodes:
 
 ```bash
-$ NAMESPACE=storage-snapshot ./run.sh export latest
+$ NAMESPACE=storage-snapshot ./run.sh import latest
 ```
 
 ## Configuration
