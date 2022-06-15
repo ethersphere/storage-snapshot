@@ -18,7 +18,7 @@ We're using [helmsman](https://github.com/Praqma/helmsman) to manage the deploym
 For initial deployment of isolated Bee cluster execute:
 
 ```bash
-$ NAMESPACE=storage-snapshot ./run.sh init
+$ NAMESPACE=storage-snapshot ./install.sh init
 ```
 
 It will execute `helmsman-dsf/init.yaml` Helmsman DSF file.
@@ -33,7 +33,7 @@ Helmsman DSF files use official [Bee Helm Chart](https://github.com/ethersphere/
 For exporting all cluster data Bee and Geth nodes:
 
 ```bash
-$ NAMESPACE=storage-snapshot ./run.sh export latest
+$ NAMESPACE=storage-snapshot ./install.sh export latest
 ```
 
 **Note:** By default it will use version `latest`, if you specify custom version (it can bee whatever single string) cluster data will be uploaded to both, custom version and latest.
@@ -42,7 +42,7 @@ $ NAMESPACE=storage-snapshot ./run.sh export latest
 For importing all cluster data Bee and Geth nodes:
 
 ```bash
-$ NAMESPACE=storage-snapshot ./run.sh import latest
+$ NAMESPACE=storage-snapshot ./install.sh import latest
 ```
 
 ## Configuration
